@@ -5,14 +5,34 @@
     <vendor>zjh7890</vendor>
 
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.java</depends>
 
     <resource-bundle>messages.MyBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.zjh7890.codegen.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
+        <!-- Add your extensions here -->
+        <projectService serviceImplementation="me.lotabout.codegenerator.CodeGeneratorSettings"/>
+
+        <projectConfigurable instance="me.lotabout.codegenerator.ui.CodeGeneratorConfigurable"/>
     </extensions>
 
     <applicationListeners>
         <listener class="com.github.zjh7890.codegen.listeners.MyApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
     </applicationListeners>
+
+    <actions>
+        <!-- Add your actions here -->
+        <group id="me.lotabout.codegenerator.action.CodeGeneratorMenu"
+               class="me.lotabout.codegenerator.action.CodeGeneratorGroup" text="CodeGenerator"
+               description="Code Generator" popup="true">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="after"
+                          relative-to-action="ProjectViewPopupMenuRefactoringGroup"/>
+            <add-to-group group-id="GenerateGroup" anchor="after" relative-to-action="OverrideMethods"/>
+        </group>
+        <action class="me.lotabout.codegenerator.TestAction" text="TestAction"
+                description="TestAction">
+            <add-to-group group-id="GenerateGroup" anchor="after" relative-to-action="JavaGenerateGroup2"/>
+        </action>
+    </actions>
+
 </idea-plugin>
